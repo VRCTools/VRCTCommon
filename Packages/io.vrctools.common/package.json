@@ -1,0 +1,16 @@
+{
+  "name": "io.vrctools.common",
+  "displayName": "VRCTools - Common",
+  "version": "0.1.0",
+  "unity": "2022.3",
+  "description": "Provides various simple utility scripts.",
+  "vrchatVersion": "2022.1.1",
+  "author": {
+    "name": "VRCTools",
+    "email": "contact@vrctools.io",
+    "url": "https://vrctools.io"
+  },
+  "vpmDependencies": {
+    "com.vrchat.worlds": "^3.7.0"
+  }
+}
