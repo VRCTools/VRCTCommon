@@ -36,7 +36,7 @@ namespace VRCTools.Common.Utils {
 
       for (var i = offset; i < source.Length; i++) {
         var existing = source[i];
-        if (element == null != (existing == null) || existing == null || !existing.Equals(element)) {
+        if ((element == null && existing != null) || existing == null || !existing.Equals(element)) {
           continue;
         }
 
