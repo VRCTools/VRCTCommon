@@ -32,6 +32,7 @@ namespace VRCTools.Common.Network {
     ///   When synchronization fails or is impossible due to the network being clogged, synchronization will be skipped
     ///   until the backoff period has passed.
     /// </summary>
+    [Min(0.1f)]
     public float synchronizationBackoff = 2;
 
     /// <summary>
