@@ -82,7 +82,7 @@ namespace VRCTools.Common.Network {
       if (this._synchronizing || this._synchronizationTimer <= 0) return;
 
       this._synchronizationTimer -= Time.deltaTime;
-      if (this._synchronizationTimer >= 0) return;
+      if (this._synchronizationTimer > 0) return;
 
       this._DoSynchronize();
     }
