@@ -83,8 +83,6 @@ namespace VRCTools.Common.Network {
     }
 
     protected virtual void Update() {
-      if (!Networking.IsOwner(this.gameObject)) return;
-
       if (this._synchronizing || this._synchronizationTimer <= 0) return;
 
       this._synchronizationTimer -= Time.deltaTime;
