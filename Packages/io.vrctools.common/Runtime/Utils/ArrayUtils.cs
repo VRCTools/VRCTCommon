@@ -97,7 +97,7 @@ namespace VRCTools.Common.Utils {
           continue;
         }
 
-        var existing = source[i];
+        var existing = source[j];
         if (j < i) {
           newArray[j] = existing;
         } else {
