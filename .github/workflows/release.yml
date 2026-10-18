@@ -45,6 +45,25 @@ jobs:
         with: 
             file_path: "${{ env.packagePath }}/package.json"
             prop_path: "version"
+
+      # Check whether a tag with the same version number already exists and fail
+      # the pipeline if so
+      - name: Ensure Version Is Unreleased
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          set +e
+          git ls-remote --exit-code --tags origin "refs/tags/${VERSION}" > /dev/null
+          status=$?
+          set -e
+
+          if [ $status -eq 0 ]; then
+            echo "::error::Tag ${VERSION} already exists - bump the version in package.json before releasing."
+            exit 1
+          elif [ $status -ne 2 ]; then
+            echo "::error::Unable to query remote tags (exit code ${status})."
+            exit $status
+          fi
     
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
