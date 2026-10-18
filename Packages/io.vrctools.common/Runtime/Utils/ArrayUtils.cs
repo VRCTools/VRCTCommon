@@ -30,7 +30,7 @@ namespace VRCTools.Common.Utils {
     /// <typeparam name="T">an array type</typeparam>
     /// <returns>the element's index within the given array or, if no matching element is found, -1</returns>
     public static int FindElement<T>(T[] source, T element, int offset = 0) {
-      if (source == null) {
+      if (source == null || offset < 0 || offset >= source.Length) {
         return -1;
       }
 
