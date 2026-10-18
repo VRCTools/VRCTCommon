@@ -89,7 +89,7 @@ namespace VRCTools.Common.Utils {
     /// <typeparam name="T">an array type</typeparam>
     /// <returns>a mutated array</returns>
     public static T[] RemoveElement<T>(T[] source, int i) {
-      if (source == null || source.Length == 0 || i >= source.Length) {
+      if (source == null || source.Length == 0 || i >= source.Length || i < 0) {
         return source;
       }
 
