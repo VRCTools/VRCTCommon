@@ -122,11 +122,6 @@ namespace VRCTools.Common.Network {
         return;
       }
 
-      if (this._synchronizationTimer > 0) {
-        this._LogWarn("Requested synchronization while within backoff period - Ignored");
-        return;
-      }
-
       this._DoSynchronize();
     }
 
