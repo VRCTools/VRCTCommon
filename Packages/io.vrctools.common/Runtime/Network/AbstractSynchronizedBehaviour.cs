@@ -21,10 +21,15 @@ namespace VRCTools.Common.Network {
   /// <summary>
   ///   Provides a simple basis for synchronized Udon behaviours which respect network congestion as well as failure
   ///   conditions.
+  /// 
   ///   Implementations of this base class will automatically synchronize their state when ownership changes players join
   ///   as well as leave.
+  /// 
   ///   Additionally, synchronizations will be retried every <see cref="synchronizationBackoff" /> seconds if the network
   ///   is congested or synchronization fails for any reason.
+  ///
+  ///   Note: Implementors must call the base method of every method they override. Failure to do so may cause undefined
+  ///   behaviour.
   /// </summary>
   public abstract class AbstractSynchronizedBehaviour : UdonSharpBehaviour {
     /// <summary>
