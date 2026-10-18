@@ -95,7 +95,7 @@ namespace VRCTools.Common.Utils {
 
       var newArray = new T[source.Length - 1];
 
-      for (var j = 0; j < newArray.Length; j++) {
+      for (var j = 0; j < source.Length; j++) {
         if (j == i) {
           continue;
         }
