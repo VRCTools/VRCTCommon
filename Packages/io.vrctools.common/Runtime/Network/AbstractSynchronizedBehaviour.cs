@@ -46,6 +46,12 @@ namespace VRCTools.Common.Network {
     public bool synchronizationDebugging;
 
     /// <summary>
+    ///   Indicates whether this object has been initialized as a result of triggering a serialization locally or by
+    ///   de-serializing the remote state.
+    /// </summary>
+    protected bool StateInitialized { get; private set; }
+
+    /// <summary>
     ///   Indicates whether a secondary synchronization (e.g. one which has been requested while another was still
     ///   processing) has been requested.
     /// </summary>
@@ -93,8 +99,13 @@ namespace VRCTools.Common.Network {
 
     /// <summary>
     ///   Ensures that the parent game object is owned by the local player.
+    /// 
     ///   Note that this method may have additional implications if ownership requests are enabled (e.g. the caller must
     ///   ensure that it actually gains ownership prior to performing other actions).
+    ///
+    ///   Also note that requesting ownership and changing values before <see cref="StateInitialized"/> has been set to
+    ///   true may cause values to be reset to their defaults within the instance. Whether a guard for this is necessary
+    ///   or not depends on your implementation.
     /// </summary>
     protected void _EnsureOwnership() {
       if (!Networking.IsOwner(this.gameObject)) Networking.SetOwner(Networking.LocalPlayer, this.gameObject);
@@ -118,6 +129,14 @@ namespace VRCTools.Common.Network {
           "Requested synchronization while prior synchronization is still pending - Scheduling secondary synchronization");
         this._secondarySynchronizationPending = true;
         return;
+      }
+
+      // mark the local object initialized since we now consider the current state to be authoritative as a result of
+      // requesting serialization and passing the ownership check
+      if (!this.StateInitialized)
+      {
+        this.StateInitialized = true;
+        this.OnStateInitialized();
       }
 
       this._DoSynchronize();
@@ -205,6 +224,23 @@ namespace VRCTools.Common.Network {
       // if synchronization has failed, schedule a retry to attempt synchronization again at a future point in time
       this._LogWarn("Synchronization has failed - Scheduling retry");
       this._ScheduleSynchronizationRetry();
+    }
+
+    public override void OnDeserialization()
+    {
+      base.OnDeserialization();
+
+      // mark the object initialized as we have just received the latest valid state from another player within the
+      // instance
+      if (!this.StateInitialized)
+      {
+        this.StateInitialized = true;
+        this.OnStateInitialized();
+      }
+    }
+
+    protected virtual void OnStateInitialized()
+    {
     }
 
     private void _LogInfo(string message) {
