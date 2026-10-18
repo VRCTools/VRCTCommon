@@ -48,6 +48,9 @@ namespace VRCTools.Common.Utils {
 
     /// <summary>
     /// Creates a copy of the given array with the specified element appended at its end.
+    ///
+    /// Note: Callers are expected to provide an existing array. If you wish to allocate an array when the first element
+    /// is added, use <see cref="AddElementOrCreate"/> instead.
     /// </summary>
     /// <param name="source">a source array</param>
     /// <param name="element">an element</param>
