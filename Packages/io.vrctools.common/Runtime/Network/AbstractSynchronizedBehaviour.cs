@@ -86,7 +86,10 @@ namespace VRCTools.Common.Network {
 
       // if we are the object owner in a freshly initialized instance, request synchronization immediately to enforce
       // the object default state on any already connected clients
-      if (Networking.IsOwner(this.gameObject)) this._TrySynchronize();
+      if (this.IsLocallyOwned())
+      {
+        this._TrySynchronize();
+      }
     }
 
     protected virtual void Update() {
@@ -109,7 +112,7 @@ namespace VRCTools.Common.Network {
     ///   or not depends on your implementation.
     /// </summary>
     protected void _EnsureOwnership() {
-      if (!Networking.IsOwner(this.gameObject)) Networking.SetOwner(Networking.LocalPlayer, this.gameObject);
+      this.TakeOwnership();
     }
 
     /// <summary>
@@ -120,7 +123,7 @@ namespace VRCTools.Common.Network {
     ///   synchronization is retried when the network is clogged or synchronization is otherwise impossible.
     /// </summary>
     protected void _TrySynchronize() {
-      if (!Networking.IsOwner(this.gameObject)) {
+      if (!this.IsLocallyOwned()) {
         this._LogWarn("Requested synchronization while not current game object owner - Ignored");
         return;
       }
@@ -173,14 +176,14 @@ namespace VRCTools.Common.Network {
     }
 
     public override void OnPlayerJoined(VRCPlayerApi player) {
-      if (!Networking.IsOwner(this.gameObject)) return;
+      if (!this.IsLocallyOwned()) return;
 
       this._LogInfo("Player joined - Scheduling synchronization");
       this._TrySynchronize();
     }
 
     public override void OnPlayerLeft(VRCPlayerApi player) {
-      if (!Networking.IsOwner(this.gameObject)) return;
+      if (!this.IsLocallyOwned()) return;
 
       this._LogInfo("Player left - Scheduling synchronization");
       this._TrySynchronize();
