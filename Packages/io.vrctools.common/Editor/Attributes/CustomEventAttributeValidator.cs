@@ -29,6 +29,11 @@ namespace VRCTools.Common.Editor.Attributes
         this.ReportViolation(method, "Method is not public - This event handler will never be invoked");
       }
 
+      if (method.IsStatic)
+      {
+        this.ReportViolation(method, "Method is static - THis event handler will never be invoked");
+      }
+
       if (method.GetParameters().Length != 0)
       {
         this.ReportViolation(method, "Method declares one or more parameters - This event handler cannot not be invoked");
