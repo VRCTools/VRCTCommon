@@ -25,7 +25,7 @@ namespace VRCTools.Common.Attributes
   /// intermediate implementation.
   /// </summary>
   [AttributeUsage(AttributeTargets.Method)]
-  public class EventHookAttribute : Attribute
+  public sealed class EventHookAttribute : Attribute
   {
   }
 }
