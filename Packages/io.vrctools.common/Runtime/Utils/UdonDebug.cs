@@ -108,7 +108,7 @@ namespace VRCTools.Common.Utils
 
 #if UNITY_EDITOR
       // inside of Unity Editor builds we color the type names based on their fully qualified name within the project
-      var typeColor = ChooseColor(typeName);
+      var typeColor = ChooseColor(behaviour.GetUdonTypeName());
       typeName = $"<color=#{typeColor}>{typeName}</color>";
 
       var objectColor = ChooseColor(objectName);
