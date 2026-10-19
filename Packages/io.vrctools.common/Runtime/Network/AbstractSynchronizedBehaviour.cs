@@ -16,6 +16,7 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon.Common;
+using VRCTools.Common.Utils;
 
 namespace VRCTools.Common.Network {
   /// <summary>
@@ -246,19 +247,19 @@ namespace VRCTools.Common.Network {
     private void _LogInfo(string message) {
       if (!this.synchronizationDebugging) return;
 
-      Debug.Log($"[{this.gameObject.name}] {message}", this);
+      UdonDebug.Info(this, message);
     }
 
     private void _LogWarn(string message) {
       if (!this.synchronizationDebugging) return;
 
-      Debug.LogWarning($"[{this.gameObject.name}] {message}", this);
+      UdonDebug.Warn(this, message);
     }
 
     private void _LogError(string message) {
       if (!this.synchronizationDebugging) return;
 
-      Debug.LogError($"[{this.gameObject.name}] {message}", this);
+      UdonDebug.Error(this, message);
     }
   }
 }
