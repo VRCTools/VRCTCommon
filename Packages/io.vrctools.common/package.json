@@ -11,6 +11,6 @@
     "url": "https://vrctools.io"
   },
   "vpmDependencies": {
-    "com.vrchat.worlds": "^3.7.0"
+    "com.vrchat.worlds": "^3.8.1"
   }
 }
