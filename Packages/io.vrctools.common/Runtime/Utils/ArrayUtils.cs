@@ -14,11 +14,13 @@
 
 using System;
 
-namespace VRCTools.Common.Utils {
+namespace VRCTools.Common.Utils
+{
   /// <summary>
   /// Provides a small set of utility functions for interactions with arrays.
   /// </summary>
-  public static class ArrayUtils {
+  public static class ArrayUtils
+  {
     /// <summary>
     /// Locates an array element within the given array.
     ///
@@ -29,14 +31,18 @@ namespace VRCTools.Common.Utils {
     /// <param name="offset">a search offset within the array</param>
     /// <typeparam name="T">an array type</typeparam>
     /// <returns>the element's index within the given array or, if no matching element is found, -1</returns>
-    public static int FindElement<T>(T[] source, T element, int offset = 0) {
-      if (source == null || offset < 0 || offset >= source.Length) {
+    public static int FindElement<T>(T[] source, T element, int offset = 0)
+    {
+      if (source == null || offset < 0 || offset >= source.Length)
+      {
         return -1;
       }
 
-      for (var i = offset; i < source.Length; i++) {
+      for (var i = offset; i < source.Length; i++)
+      {
         var existing = source[i];
-        if (element == null ? existing == null : element.Equals(existing)) {
+        if (element == null ? existing == null : element.Equals(existing))
+        {
           return i;
         }
       }
@@ -54,7 +60,8 @@ namespace VRCTools.Common.Utils {
     /// <param name="element">an element</param>
     /// <typeparam name="T">an array type</typeparam>
     /// <returns>a new mutated array</returns>
-    public static T[] AddElement<T>(T[] source, T element) {
+    public static T[] AddElement<T>(T[] source, T element)
+    {
       var newArray = new T[source.Length + 1];
       Array.Copy(source, newArray, source.Length);
       newArray[source.Length] = element;
@@ -69,8 +76,10 @@ namespace VRCTools.Common.Utils {
     /// <param name="element">an element</param>
     /// <typeparam name="T">an array type</typeparam>
     /// <returns>a new mutated array</returns>
-    public static T[] AddElementOrCreate<T>(T[] source, T element) {
-      if (source == null) {
+    public static T[] AddElementOrCreate<T>(T[] source, T element)
+    {
+      if (source == null)
+      {
         var newArray = new T[1];
         newArray[0] = element;
         return newArray;
@@ -86,22 +95,29 @@ namespace VRCTools.Common.Utils {
     /// <param name="i">an element index</param>
     /// <typeparam name="T">an array type</typeparam>
     /// <returns>a mutated array</returns>
-    public static T[] RemoveElement<T>(T[] source, int i) {
-      if (source == null || source.Length == 0 || i >= source.Length || i < 0) {
+    public static T[] RemoveElement<T>(T[] source, int i)
+    {
+      if (source == null || source.Length == 0 || i >= source.Length || i < 0)
+      {
         return source;
       }
 
       var newArray = new T[source.Length - 1];
 
-      for (var j = 0; j < source.Length; j++) {
-        if (j == i) {
+      for (var j = 0; j < source.Length; j++)
+      {
+        if (j == i)
+        {
           continue;
         }
 
         var existing = source[j];
-        if (j < i) {
+        if (j < i)
+        {
           newArray[j] = existing;
-        } else {
+        }
+        else
+        {
           newArray[j - 1] = existing;
         }
       }

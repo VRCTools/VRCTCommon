@@ -18,14 +18,15 @@ using VRC.SDKBase;
 using VRC.Udon.Common;
 using VRCTools.Common.Utils;
 
-namespace VRCTools.Common.Network {
+namespace VRCTools.Common.Network
+{
   /// <summary>
   ///   Provides a simple basis for synchronized Udon behaviours which respect network congestion as well as failure
   ///   conditions.
-  /// 
+  ///
   ///   Implementations of this base class will automatically synchronize their state when ownership changes players join
   ///   as well as leave.
-  /// 
+  ///
   ///   Additionally, synchronizations will be retried every <see cref="synchronizationBackoff" /> seconds if the network
   ///   is congested or synchronization fails for any reason.
   ///
@@ -33,14 +34,14 @@ namespace VRCTools.Common.Network {
   ///   behaviour.
   /// </summary>
   [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-  public abstract class AbstractSynchronizedBehaviour : UdonSharpBehaviour {
+  public abstract class AbstractSynchronizedBehaviour : UdonSharpBehaviour
+  {
     /// <summary>
     ///   Defines the amount of time between synchronization retries.
     ///   When synchronization fails or is impossible due to the network being clogged, synchronization will be skipped
     ///   until the backoff period has passed.
     /// </summary>
-    [Min(0.1f)]
-    public float synchronizationBackoff = 2;
+    [Min(0.1f)] public float synchronizationBackoff = 2;
 
     /// <summary>
     ///   Defines whether synchronization debug information shall be written to the game log.
@@ -78,8 +79,10 @@ namespace VRCTools.Common.Network {
     protected bool HasOngoingSynchronization => this._synchronizing || this._synchronizationTimer > 0 ||
                                                 this._secondarySynchronizationPending;
 
-    protected virtual void Start() {
-      if (this.synchronizationBackoff <= 0) {
+    protected virtual void Start()
+    {
+      if (this.synchronizationBackoff <= 0)
+      {
         UdonDebug.Error(this,
           $"[{this.gameObject.name}] Specified invalid synchronization backoff of {this.synchronizationBackoff} - Defaulting to 1 second");
         this.synchronizationBackoff = 1;
@@ -93,7 +96,8 @@ namespace VRCTools.Common.Network {
       }
     }
 
-    protected virtual void Update() {
+    protected virtual void Update()
+    {
       if (this._synchronizing || this._synchronizationTimer <= 0) return;
 
       this._synchronizationTimer -= Time.deltaTime;
@@ -104,7 +108,7 @@ namespace VRCTools.Common.Network {
 
     /// <summary>
     ///   Ensures that the parent game object is owned by the local player.
-    /// 
+    ///
     ///   Note that this method may have additional implications if ownership requests are enabled (e.g. the caller must
     ///   ensure that it actually gains ownership prior to performing other actions).
     ///
@@ -112,7 +116,8 @@ namespace VRCTools.Common.Network {
     ///   true may cause values to be reset to their defaults within the instance. Whether a guard for this is necessary
     ///   or not depends on your implementation.
     /// </summary>
-    protected void _EnsureOwnership() {
+    protected void _EnsureOwnership()
+    {
       this.TakeOwnership();
     }
 
@@ -123,13 +128,16 @@ namespace VRCTools.Common.Network {
     ///   This method effectively encapsulates <see cref="UdonSharpBehaviour.RequestSerialization" /> in such a way that
     ///   synchronization is retried when the network is clogged or synchronization is otherwise impossible.
     /// </summary>
-    protected void _TrySynchronize() {
-      if (!this.IsLocallyOwned()) {
+    protected void _TrySynchronize()
+    {
+      if (!this.IsLocallyOwned())
+      {
         this._LogWarn("Requested synchronization while not current game object owner - Ignored");
         return;
       }
 
-      if (this._synchronizing || this._synchronizationTimer > 0) {
+      if (this._synchronizing || this._synchronizationTimer > 0)
+      {
         this._LogInfo(
           "Requested synchronization while prior synchronization is still pending - Scheduling secondary synchronization");
         this._secondarySynchronizationPending = true;
@@ -150,11 +158,13 @@ namespace VRCTools.Common.Network {
     /// <summary>
     ///   Schedules a synchronization retry using the configured period.
     /// </summary>
-    private void _ScheduleSynchronizationRetry() {
+    private void _ScheduleSynchronizationRetry()
+    {
       this._synchronizing = false;
       this._synchronizationTimer = this.synchronizationBackoff;
 
-      if (this._secondarySynchronizationPending) {
+      if (this._secondarySynchronizationPending)
+      {
         this._LogWarn("Ignoring secondary synchronization within backoff period");
         this._secondarySynchronizationPending = false;
       }
@@ -164,8 +174,10 @@ namespace VRCTools.Common.Network {
     ///   Actually performs the synchronization step.
     ///   If the network indicates that it is currently congested, a retry will be scheduled instead.
     /// </summary>
-    private void _DoSynchronize() {
-      if (Networking.IsClogged) {
+    private void _DoSynchronize()
+    {
+      if (Networking.IsClogged)
+      {
         this._LogWarn("Networking is currently clogged - Scheduling retry");
         this._ScheduleSynchronizationRetry();
         return;
@@ -176,24 +188,28 @@ namespace VRCTools.Common.Network {
       this.RequestSerialization();
     }
 
-    public override void OnPlayerJoined(VRCPlayerApi player) {
+    public override void OnPlayerJoined(VRCPlayerApi player)
+    {
       if (!this.IsLocallyOwned()) return;
 
       this._LogInfo("Player joined - Scheduling synchronization");
       this._TrySynchronize();
     }
 
-    public override void OnPlayerLeft(VRCPlayerApi player) {
+    public override void OnPlayerLeft(VRCPlayerApi player)
+    {
       if (!this.IsLocallyOwned()) return;
 
       this._LogInfo("Player left - Scheduling synchronization");
       this._TrySynchronize();
     }
 
-    public override void OnOwnershipTransferred(VRCPlayerApi player) {
+    public override void OnOwnershipTransferred(VRCPlayerApi player)
+    {
       // when ownership is gained, we'll ensure synchronization to mitigate any divergence in state which may have
       // occurred in the meantime
-      if (player.isLocal) {
+      if (player.isLocal)
+      {
         this._LogInfo("Gained ownership - Requesting synchronization");
         this._TrySynchronize();
         return;
@@ -207,17 +223,20 @@ namespace VRCTools.Common.Network {
       this._secondarySynchronizationPending = false;
     }
 
-    public override void OnPostSerialization(SerializationResult result) {
+    public override void OnPostSerialization(SerializationResult result)
+    {
       // reset the synchronization lock so that implementors are able to request synchronization once again
       this._synchronizing = false;
 
       // if the synchronization was successful, ensure that all remaining synchronization timers are reset to a safe
       // value (this has typically already happened but we're playing it safe here)
-      if (result.success) {
+      if (result.success)
+      {
         this._LogInfo("Synchronizing successful");
         this._synchronizationTimer = -1;
 
-        if (this._secondarySynchronizationPending) {
+        if (this._secondarySynchronizationPending)
+        {
           this._LogInfo("Performing secondary synchronization");
           this._secondarySynchronizationPending = false;
           this._TrySynchronize();
@@ -252,19 +271,22 @@ namespace VRCTools.Common.Network {
     {
     }
 
-    private void _LogInfo(string message) {
+    private void _LogInfo(string message)
+    {
       if (!this.synchronizationDebugging) return;
 
       UdonDebug.Info(this, message);
     }
 
-    private void _LogWarn(string message) {
+    private void _LogWarn(string message)
+    {
       if (!this.synchronizationDebugging) return;
 
       UdonDebug.Warn(this, message);
     }
 
-    private void _LogError(string message) {
+    private void _LogError(string message)
+    {
       if (!this.synchronizationDebugging) return;
 
       UdonDebug.Error(this, message);

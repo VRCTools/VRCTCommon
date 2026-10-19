@@ -14,22 +14,27 @@
 
 using UnityEngine;
 
-namespace VRCTools.Common.Utils {
+namespace VRCTools.Common.Utils
+{
   /// <summary>
   /// Provides functions which simplify the interaction with animators.
   /// </summary>
-  public static class AnimatorUtilities {
+  public static class AnimatorUtilities
+  {
     /// <summary>
     /// Resolves an array of animator parameters.
     /// </summary>
     /// <param name="parameterNames">an array of parameter names</param>
     /// <returns>an array of parameter ids</returns>
-    public static int[] ResolveParameterIds(string[] parameterNames) {
+    public static int[] ResolveParameterIds(string[] parameterNames)
+    {
       var parameterIds = new int[parameterNames.Length];
 
-      for (var i = 0; i < parameterNames.Length; i++) {
+      for (var i = 0; i < parameterNames.Length; i++)
+      {
         var parameterName = parameterNames[i];
-        if (string.IsNullOrEmpty(parameterName)) {
+        if (string.IsNullOrEmpty(parameterName))
+        {
           parameterIds[i] = -1;
           continue;
         }
