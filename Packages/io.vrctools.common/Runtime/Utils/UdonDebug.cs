@@ -40,7 +40,7 @@ namespace VRCTools.Common.Utils
     /// <param name="args">a set of arguments to pass to the formatter</param>
     public static void Info(UdonSharpBehaviour behaviour, string message, params object[] args)
     {
-      Debug.LogFormat(behaviour, FormatMessage(behaviour, message, args));
+      Debug.Log(FormatMessage(behaviour, message, args), behaviour);
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ namespace VRCTools.Common.Utils
     /// <param name="args">a set of arguments to pass to the formatter</param>
     public static void Warn(UdonSharpBehaviour behaviour, string message, params object[] args)
     {
-      Debug.LogWarningFormat(behaviour, FormatMessage(behaviour, message, args));
+      Debug.LogWarning(FormatMessage(behaviour, message, args), behaviour);
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ namespace VRCTools.Common.Utils
     /// <param name="args">a set of arguments to pass to the formatter</param>
     public static void Error(UdonSharpBehaviour behaviour, string message, params object[] args)
     {
-      Debug.LogErrorFormat(behaviour, FormatMessage(behaviour, message, args));
+      Debug.LogError(FormatMessage(behaviour, message, args), behaviour);
     }
 
     /// <summary>
