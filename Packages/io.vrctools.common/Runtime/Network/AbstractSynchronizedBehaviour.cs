@@ -191,6 +191,7 @@ namespace VRCTools.Common.Network
       this.RequestSerialization();
     }
 
+    [MustCallBase]
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
       if (!this.IsLocallyOwned()) return;
@@ -199,6 +200,7 @@ namespace VRCTools.Common.Network
       this._TrySynchronize();
     }
 
+    [MustCallBase]
     public override void OnPlayerLeft(VRCPlayerApi player)
     {
       if (!this.IsLocallyOwned()) return;
