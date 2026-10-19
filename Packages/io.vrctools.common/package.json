@@ -1,7 +1,7 @@
 {
   "name": "io.vrctools.common",
   "displayName": "VRCTools - Common",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "unity": "2022.3",
   "description": "Provides various simple utility scripts.",
   "vrchatVersion": "2022.1.1",
