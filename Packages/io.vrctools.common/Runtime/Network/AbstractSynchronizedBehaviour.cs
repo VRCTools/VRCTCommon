@@ -80,6 +80,7 @@ namespace VRCTools.Common.Network
     protected bool HasOngoingSynchronization => this._synchronizing || this._synchronizationTimer > 0 ||
                                                 this._secondarySynchronizationPending;
 
+    [MustCallBase]
     protected virtual void Start()
     {
       if (this.synchronizationBackoff <= 0)
@@ -97,6 +98,7 @@ namespace VRCTools.Common.Network
       }
     }
 
+    [MustCallBase]
     protected virtual void Update()
     {
       if (this._synchronizing || this._synchronizationTimer <= 0) return;
@@ -205,6 +207,7 @@ namespace VRCTools.Common.Network
       this._TrySynchronize();
     }
 
+    [MustCallBase]
     public override void OnOwnershipTransferred(VRCPlayerApi player)
     {
       // when ownership is gained, we'll ensure synchronization to mitigate any divergence in state which may have
@@ -224,6 +227,7 @@ namespace VRCTools.Common.Network
       this._secondarySynchronizationPending = false;
     }
 
+    [MustCallBase]
     public override void OnPostSerialization(SerializationResult result)
     {
       // reset the synchronization lock so that implementors are able to request synchronization once again
@@ -251,6 +255,7 @@ namespace VRCTools.Common.Network
       this._ScheduleSynchronizationRetry();
     }
 
+    [MustCallBase]
     public override void OnDeserialization()
     {
       base.OnDeserialization();
