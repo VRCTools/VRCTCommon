@@ -31,7 +31,7 @@ namespace VRCTools.Common.Editor.Attributes
 
       if (method.IsStatic)
       {
-        this.ReportViolation(method, "Method is static - THis event handler will never be invoked");
+        this.ReportViolation(method, "Method is static - This event handler will never be invoked");
       }
 
       if (method.GetParameters().Length != 0)
