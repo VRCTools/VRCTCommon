@@ -37,7 +37,7 @@ namespace VRCTools.Common.Editor.Attributes
 
       if (method.Name.StartsWith("_"))
       {
-        this.ReportViolation(method, "Method name is prefixed with underscore - Event handler will never be invoked");
+        this.ReportViolation(method, "Method name is prefixed with underscore - Event handler may not be invoked");
       }
 
       if (method.GetParameters().Length > 8)
