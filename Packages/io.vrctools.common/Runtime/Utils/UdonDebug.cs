@@ -107,14 +107,16 @@ namespace VRCTools.Common.Utils
       }
 
 #if UNITY_EDITOR
-      // inside of Unity Editor builds we color the type names randomly based on their fully qualified name within
-      // the project
-      var color = ChooseColor(behaviour);
-      typeName = $"<color=#{color}>{typeName}</color>";
+      // inside of Unity Editor builds we color the type names based on their fully qualified name within the project
+      var typeColor = ChooseColor(typeName);
+      typeName = $"<color=#{typeColor}>{typeName}</color>";
+
+      var objectColor = ChooseColor(objectName);
+      objectName = $"<color=#{objectColor}>{objectName}</color>";
 #endif
 
       var formattedMessage = string.Format(message, args);
-      return $"[{typeName}#{objectName}]] {formattedMessage}";
+      return $"[{typeName}#{objectName}] {formattedMessage}";
     }
 
 #if UNITY_EDITOR
@@ -143,11 +145,11 @@ namespace VRCTools.Common.Utils
     /// <summary>
     /// Picks a color from a pre-defined palette to make recognition of messages within the editor easier.
     /// </summary>
-    /// <param name="behaviour">the originating behaviour</param>
+    /// <param name="name">the name of the target object</param>
     /// <returns>a color preset</returns>
-    private static string ChooseColor(UdonSharpBehaviour behaviour)
+    private static string ChooseColor(string name)
     {
-      var index = (Animator.StringToHash(behaviour.GetUdonTypeName()) & 0x7FFFFFFF) % TypeColorCount;
+      var index = (Animator.StringToHash(name) & 0x7FFFFFFF) % TypeColorCount;
       return TypeColorPalette.Substring(index * 6, 6);
     }
 #endif
