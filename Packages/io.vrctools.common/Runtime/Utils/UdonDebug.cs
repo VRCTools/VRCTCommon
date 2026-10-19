@@ -113,7 +113,8 @@ namespace VRCTools.Common.Utils
       typeName = $"<color=#{color}>{typeName}</color>";
 #endif
 
-      return string.Format($"[{typeName}#{objectName}]] {message}", args);
+      var formattedMessage = string.Format(message, args);
+      return $"[{typeName}#{objectName}]] {formattedMessage}";
     }
 
 #if UNITY_EDITOR
