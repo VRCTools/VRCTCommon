@@ -28,6 +28,11 @@ namespace VRCTools.Common.Utils
     /// <returns>an array of parameter ids</returns>
     public static int[] ResolveParameterIds(string[] parameterNames)
     {
+      if (parameterNames == null || parameterNames.Length == 0)
+      {
+        return new int[0];
+      }
+
       var parameterIds = new int[parameterNames.Length];
 
       for (var i = 0; i < parameterNames.Length; i++)
