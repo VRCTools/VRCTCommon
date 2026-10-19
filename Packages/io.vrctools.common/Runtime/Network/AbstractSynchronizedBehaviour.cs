@@ -140,7 +140,7 @@ namespace VRCTools.Common.Network {
       if (!this.IsStateInitialized)
       {
         this.IsStateInitialized = true;
-        this.OnStateInitialized();
+        this._OnStateInitialized();
       }
 
       this._DoSynchronize();
@@ -239,11 +239,11 @@ namespace VRCTools.Common.Network {
       if (!this.IsStateInitialized)
       {
         this.IsStateInitialized = true;
-        this.OnStateInitialized();
+        this._OnStateInitialized();
       }
     }
 
-    protected virtual void OnStateInitialized()
+    protected virtual void _OnStateInitialized()
     {
     }
 
