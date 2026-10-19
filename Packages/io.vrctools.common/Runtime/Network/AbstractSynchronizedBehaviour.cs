@@ -243,6 +243,10 @@ namespace VRCTools.Common.Network {
       }
     }
 
+    /// <summary>
+    /// Hook which is invoked when the object first becomes initialized (e.g. through serializing the first
+    /// authoritative state or when the first state is received).
+    /// </summary>
     protected virtual void _OnStateInitialized()
     {
     }

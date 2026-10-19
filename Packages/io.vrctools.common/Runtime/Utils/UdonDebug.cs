@@ -91,6 +91,7 @@ namespace VRCTools.Common.Utils
         /// </summary>
         /// <param name="behaviour">the originating behaviour</param>
         /// <param name="message">a message to decorate</param>
+        /// <param name="args">array of parameters to pass into the format</param>
         /// <returns>a decorated message</returns>
         private static string FormatMessage(UdonSharpBehaviour behaviour, string message, params object[] args)
         {
@@ -140,7 +141,7 @@ namespace VRCTools.Common.Utils
         private const int TypeColorCount = 8;
         
         /// <summary>
-        /// Picks a random color from a pre-defined palette to make recognition of messages within the editor easier.
+        /// Picks a color from a pre-defined palette to make recognition of messages within the editor easier.
         /// </summary>
         /// <param name="behaviour">the originating behaviour</param>
         /// <returns>a color preset</returns>

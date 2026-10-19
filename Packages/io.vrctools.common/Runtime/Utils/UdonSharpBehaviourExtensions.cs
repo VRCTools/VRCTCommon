@@ -47,7 +47,7 @@ namespace VRCTools.Common.Utils
         /// </summary>
         /// <param name="behaviour">a target behaviour</param>
         /// <param name="player">a player</param>
-        /// <returns>true if locally owned, false otherwise</returns>
+        /// <returns>true if owned by given player, false otherwise</returns>
         public static bool HasOwnership(this UdonSharpBehaviour behaviour, VRCPlayerApi player)
         {
             if (!Utilities.IsValid(behaviour))
@@ -82,7 +82,7 @@ namespace VRCTools.Common.Utils
         ///
         /// If the given behaviour is already owned by the local player, this method also acts as a noop.
         /// </summary>
-        /// <param name="behaviour"></param>
+        /// <param name="behaviour">a target behaviour</param>
         public static void TakeOwnership(this UdonSharpBehaviour behaviour)
         {
             if (!Utilities.IsValid(behaviour))
