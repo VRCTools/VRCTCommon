@@ -50,7 +50,7 @@ namespace VRCTools.Common.Network {
     ///   Indicates whether this object has been initialized as a result of triggering a serialization locally or by
     ///   de-serializing the remote state.
     /// </summary>
-    protected bool StateInitialized { get; private set; }
+    public bool IsStateInitialized { get; private set; }
 
     /// <summary>
     ///   Indicates whether a secondary synchronization (e.g. one which has been requested while another was still
@@ -104,7 +104,7 @@ namespace VRCTools.Common.Network {
     ///   Note that this method may have additional implications if ownership requests are enabled (e.g. the caller must
     ///   ensure that it actually gains ownership prior to performing other actions).
     ///
-    ///   Also note that requesting ownership and changing values before <see cref="StateInitialized"/> has been set to
+    ///   Also note that requesting ownership and changing values before <see cref="IsStateInitialized"/> has been set to
     ///   true may cause values to be reset to their defaults within the instance. Whether a guard for this is necessary
     ///   or not depends on your implementation.
     /// </summary>
@@ -134,9 +134,9 @@ namespace VRCTools.Common.Network {
 
       // mark the local object initialized since we now consider the current state to be authoritative as a result of
       // requesting serialization and passing the ownership check
-      if (!this.StateInitialized)
+      if (!this.IsStateInitialized)
       {
-        this.StateInitialized = true;
+        this.IsStateInitialized = true;
         this.OnStateInitialized();
       }
 
@@ -233,9 +233,9 @@ namespace VRCTools.Common.Network {
 
       // mark the object initialized as we have just received the latest valid state from another player within the
       // instance
-      if (!this.StateInitialized)
+      if (!this.IsStateInitialized)
       {
-        this.StateInitialized = true;
+        this.IsStateInitialized = true;
         this.OnStateInitialized();
       }
     }
