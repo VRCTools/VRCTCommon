@@ -32,6 +32,7 @@ namespace VRCTools.Common.Network {
   ///   Note: Implementors must call the base method of every method they override. Failure to do so may cause undefined
   ///   behaviour.
   /// </summary>
+  [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
   public abstract class AbstractSynchronizedBehaviour : UdonSharpBehaviour {
     /// <summary>
     ///   Defines the amount of time between synchronization retries.
