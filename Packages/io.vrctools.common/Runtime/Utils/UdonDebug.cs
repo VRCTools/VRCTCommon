@@ -115,7 +115,7 @@ namespace VRCTools.Common.Utils
       objectName = $"<color=#{objectColor}>{objectName}</color>";
 #endif
 
-      var formattedMessage = string.Format(message, args);
+      var formattedMessage = args.Length != 0 ? string.Format(message, args) : message;
       return $"[{typeName}#{objectName}] {formattedMessage}";
     }
 
