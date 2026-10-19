@@ -16,6 +16,7 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon.Common;
+using VRCTools.Common.Attributes;
 using VRCTools.Common.Utils;
 
 namespace VRCTools.Common.Network
@@ -267,6 +268,7 @@ namespace VRCTools.Common.Network
     /// Hook which is invoked when the object first becomes initialized (e.g. through serializing the first
     /// authoritative state or when the first state is received).
     /// </summary>
+    [EventHook]
     protected virtual void _OnStateInitialized()
     {
     }

@@ -1,0 +1,18 @@
+{
+    "name": "VRCTools.Common.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:902fd52feb029854d880c8c23cc2b199"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
