@@ -79,8 +79,8 @@ namespace VRCTools.Common.Network {
 
     protected virtual void Start() {
       if (this.synchronizationBackoff <= 0) {
-        Debug.LogError(
-          $"[{this.gameObject.name}] Specified invalid synchronization backoff of {this.synchronizationBackoff} - Defaulting to 1 second", this);
+        UdonDebug.Error(this,
+          $"[{this.gameObject.name}] Specified invalid synchronization backoff of {this.synchronizationBackoff} - Defaulting to 1 second");
         this.synchronizationBackoff = 1;
       }
 
