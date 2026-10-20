@@ -86,6 +86,29 @@ namespace VRCTools.Common.Utils
     }
 
     /// <summary>
+    /// Disables the given behaviour and logs an error message within its context.
+    /// </summary>
+    /// <param name="behaviour"></param>
+    /// <param name="message"></param>
+    public static void Critical(UdonSharpBehaviour behaviour, string message)
+    {
+      behaviour.enabled = false;
+      Error(behaviour, $"(CRITICAL): {message}");
+    }
+
+    /// <summary>
+    /// Disables the given behaviour and logs an error message within its context.
+    /// </summary>
+    /// <param name="behaviour"></param>
+    /// <param name="message"></param>
+    /// <param name="args"></param>
+    public static void Critical(UdonSharpBehaviour behaviour, string message, params object[] args)
+    {
+      behaviour.enabled = false;
+      Error(behaviour, $"(CRITICAL): {message}", args);
+    }
+
+    /// <summary>
     /// Prefixes the message with Udon behaviour related information to ensure its source is clear.
     /// </summary>
     /// <param name="behaviour">the originating behaviour</param>
